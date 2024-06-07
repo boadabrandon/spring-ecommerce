@@ -1,8 +1,10 @@
 package com.shoe.platform.controller;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,6 +21,8 @@ import com.shoe.platform.model.DetalleOrden;
 import com.shoe.platform.model.Orden;
 import com.shoe.platform.model.Producto;
 import com.shoe.platform.model.Usuario;
+import com.shoe.platform.service.IDetalleOrdenService;
+import com.shoe.platform.service.IOrdenService;
 import com.shoe.platform.service.IUsuarioService;
 import com.shoe.platform.service.ProductoService;
 
@@ -34,6 +38,12 @@ public class HomeController {
 	@Autowired
 	private IUsuarioService iUsuarioService; 
 	
+	@Autowired
+	private IOrdenService iOrdenService;
+
+	@Autowired
+	private IDetalleOrdenService iDetalleOrdenService;
+
 	//Almacena los detalles de la orden
 	List<DetalleOrden> detalles = new ArrayList<DetalleOrden>();
 	
@@ -123,9 +133,9 @@ public class HomeController {
 		}
 		
 		@GetMapping("/order")
-		public String order(Model model,@PathVariable Integer id) {
+		public String order(Model model) {
 			
-			Usuario usuario = iUsuarioService.findById(id).get();
+			Usuario usuario = iUsuarioService.findById(1).get();
 			
 			model.addAttribute("cart", detalles);
 			model.addAttribute("orden", orden);
@@ -133,4 +143,38 @@ public class HomeController {
 			
 			return "usuario/resumenorden";
 		}
+
+		@GetMapping("/saveOrder")
+		public String saveOrder(){
+			Date fechaCreacion = new Date();
+			orden.setFechaCreacion(fechaCreacion);
+			orden.setNumero(iOrdenService.generarNumeroOrden());
+
+			//usuario
+			Usuario usuario = iUsuarioService.findById(1).get();
+
+			orden.setUsuario(usuario);
+			iOrdenService.save(orden);
+
+			//guardar detalles
+			for(DetalleOrden dt:detalles){
+				dt.setOrden(orden);
+				iDetalleOrdenService.save(dt);
+			}
+
+			//limpiar la lista y la orden
+			orden = new Orden();
+			detalles.clear();
+
+			return "redirect:/";
+		}
+
+		@PostMapping("/search")
+		public String searchProduct(@RequestParam String nombre, Model model){
+			log.info("Nombre del producto: {}", nombre);
+			List<Producto> productos= productoService.findAll().stream().filter(p -> p.getNombre().contains(nombre)).collect(Collectors.toList());
+			model.addAttribute("productos",productos);
+			return "usuario/home";
+		}
+
 }
