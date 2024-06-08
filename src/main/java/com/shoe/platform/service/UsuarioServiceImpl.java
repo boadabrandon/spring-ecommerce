@@ -21,8 +21,7 @@ public class UsuarioServiceImpl implements IUsuarioService {
 
 	@Override
 	public Usuario save(Usuario usuario) {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Unimplemented method 'save'");
+		return usuarioRepository.save(usuario);
 	}
 
 
