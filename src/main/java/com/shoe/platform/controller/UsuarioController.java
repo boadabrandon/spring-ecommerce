@@ -53,14 +53,15 @@ public class UsuarioController {
 	}
 
 	@PostMapping("/acceder")
-	public String acceder(Usuario usuario, HttpSession session) {
+	public String acceder(Usuario usuario, HttpSession session,Model model) {
 		logger.info("accesos: {}", usuario);
 
 		Optional<Usuario> user = iUsuarioService.findByEmail(usuario.getEmail());
 		// logger.info("Usuario de db: {}", user.get());
-
+		
 		if (user.isPresent()) {
 			session.setAttribute("idusuario", user.get().getId());
+			session.setAttribute("tipoUsuario", user.get().getTipo());
 			if (user.get().getTipo().equals("USER")) {
 				return "redirect:/";
 			} else {

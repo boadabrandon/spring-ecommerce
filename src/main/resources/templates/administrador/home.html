@@ -8,14 +8,14 @@
   <meta name="description" content="">
   <meta name="author" content="">
 
-  <title>Spring eCommerce</title>
+  <title>Paraíso Shoes</title>
 
 
   <!-- Bootstrap core CSS -->
-  <link th:href="@{vendor/bootstrap/css/bootstrap.min.css}" rel="stylesheet">
+  <link th:href="@{/vendor/bootstrap/css/bootstrap.min.css}" rel="stylesheet">
   
   <!-- Custom styles for this template -->
-  <link th:href="@{css/heroic-features.css}" rel="stylesheet">
+  <link th:href="@{/css/heroic-features.css}" rel="stylesheet">
 
 </head>
 
@@ -29,7 +29,7 @@
 
 		<!-- Jumbotron Header -->
 		<header class="jumbotron my-4">
-			<h1 class="display-3">Bienvenido a Spring Ecommerce 2021</h1>
+			<h1 class="display-3">Bienvenido a Paraíso Shoes</h1>
 			<p class="lead">Tu tienda de productos en Línea</p>
 		</header>
 
@@ -43,7 +43,7 @@
 						<p class="card-text" th:text="${producto.nombre}"></p>
 					</div>
 					<div class="card-footer">
-						<a href="productohome.html" class="btn btn-success">Ver producto</a>
+						<a th:href="@{/productohome/{id} (id=${producto.id})}" class="btn btn-success">Ver producto</a>
 					</div>
 				</div>
 			</div>

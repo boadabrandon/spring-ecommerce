@@ -8,7 +8,7 @@
 	<meta name="description" content="">
 	<meta name="author" content="">
 
-	<title>Spring eCommerce</title>
+	<title>Paraíso Shoes</title>
 
 
 	<!-- Bootstrap core CSS -->
@@ -22,16 +22,26 @@
 <body>
 
 	<!-- Navigation -->
-	<div th:include="usuario/template_usuario.html::header" th:if="${sesion==null}"></div>
+	<div th:if="${session.idusuario == null}">
+		<div th:include="usuario/template_usuario.html::header"></div>
+	</div>
 
-	<div th:include="usuario/template_usuario.html::header-user" th:unless=	"${sesion==null}"></div>
+	<div th:unless="${session.idusuario == null}">
+		<div th:if="${session.tipoUsuario == 'USER'}">
+			<div th:include="usuario/template_usuario.html::header-user"></div>
+		</div>
+
+		<div th:if="${session.tipoUsuario == 'ADMIN'}">
+			<div th:include="administrador/template_admin.html::header"></div>
+		</div>
+	</div>
 
 	<!-- Page Content -->
 	<div class="container">
 
 		<!-- Jumbotron Header -->
 		<header class="jumbotron my-4">
-			<h1 class="display-3">Bienvenido a Spring Ecommerce 2021</h1>
+			<h1 class="display-3">Bienvenido a Paraíso Shoes</h1>
 			<p class="lead">Tu tienda de productos en Línea</p>
 		</header>
 
