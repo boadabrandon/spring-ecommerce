@@ -1,5 +1,6 @@
 package com.shoe.platform.controller;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.slf4j.Logger;
@@ -10,7 +11,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.shoe.platform.model.Orden;
 import com.shoe.platform.model.Usuario;
+import com.shoe.platform.service.IOrdenService;
 import com.shoe.platform.service.IUsuarioService;
 
 import jakarta.servlet.http.HttpSession;
@@ -25,6 +28,9 @@ public class UsuarioController {
 
 	@Autowired
 	private IUsuarioService iUsuarioService;
+
+	@Autowired
+	private IOrdenService iOrdenService;
 
 	@GetMapping("/registro")
 	public String create() {
@@ -50,26 +56,33 @@ public class UsuarioController {
 		logger.info("accesos: {}", usuario);
 
 		Optional<Usuario> user = iUsuarioService.findByEmail(usuario.getEmail());
-		//logger.info("Usuario de db: {}", user.get());
+		// logger.info("Usuario de db: {}", user.get());
 
 		if (user.isPresent()) {
 			session.setAttribute("idusuario", user.get().getId());
 			if (user.get().getTipo().equals("USER")) {
-				return "redirect:/administrador";
-			}else {
 				return "redirect:/";
+			} else {
+				return "redirect:/administrador";
 			}
-		}else {
+		} else {
 			logger.info("Usuario no existe");
 		}
 
 		return "redirect:/";
 	}
-	
+
 	@GetMapping("/compras")
 	public String obtenerCompras(Model model, HttpSession session) {
 		model.addAttribute("sesion", session.getAttribute("idusuario"));
+
+		Usuario usuario = iUsuarioService.findById(Integer.parseInt(session.getAttribute("idusuario").toString()))
+				.get();
+		List<Orden> ordenes = iOrdenService.findByUsuario(usuario);
+
+		model.addAttribute("ordenes", ordenes);
+
 		return "usuario/compras";
 	}
-	
+
 }
