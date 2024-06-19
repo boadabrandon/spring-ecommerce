@@ -53,12 +53,12 @@ public class UsuarioController {
 	}
 
 	@PostMapping("/acceder")
-	public String acceder(Usuario usuario, HttpSession session,Model model) {
+	public String acceder(Usuario usuario, HttpSession session, Model model) {
 		logger.info("accesos: {}", usuario);
 
 		Optional<Usuario> user = iUsuarioService.findByEmail(usuario.getEmail());
 		// logger.info("Usuario de db: {}", user.get());
-		
+
 		if (user.isPresent()) {
 			session.setAttribute("idusuario", user.get().getId());
 			session.setAttribute("tipoUsuario", user.get().getTipo());
@@ -86,20 +86,20 @@ public class UsuarioController {
 
 		return "usuario/compras";
 	}
-	
+
 	@GetMapping("/detalle/{id}")
 	public String detalleCompra(@PathVariable Integer id, HttpSession session, Model model) {
-		
+
 		logger.info("Id de la orden: {}", id);
 		Optional<Orden> orden = iOrdenService.findById(id);
-		
+
 		model.addAttribute("detalles", orden.get().getDetalle());
-		
-		//session
+
+		// session
 		model.addAttribute("sesion", model.getAttribute("idusuario"));
 		return "usuario/detallecompra";
 	}
-	
+
 	@GetMapping("/cerrar")
 	public String cerrarSesion(HttpSession session) {
 		session.removeAttribute("idusuario");
