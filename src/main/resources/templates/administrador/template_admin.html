@@ -1,13 +1,13 @@
 <!-- Navigation -->
 <div th:fragment="header">
-	<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+	<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" 	style="background-color: #FFC0CB !important">
 		<div class="container">
-			<a class="navbar-brand" th:href="@{/administrador}">Paraiso Shoes</a>
+			<a class="navbar-brand" th:href="@{/administrador}" style="color: #FFFFFF;background-color: #F789EE;border-radius:5px">Paraiso Shoes</a>
 
 			<form class="form-inline my-2 my-lg-0" method="post" th:action="@{/search}">
 				<input class="form-control mr-sm-2" type="search" placeholder="Buscar" aria-label="Search" name="nombre"
 					autocomplete="off">
-				<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Buscar</button>
+				<button class="btn btn-outline-success my-2 my-sm-0" type="submit" style="border:3px solid green">Buscar</button>
 			</form>
 
 
@@ -19,12 +19,11 @@
 				<ul class="navbar-nav ml-auto">
 					<li class="nav-item dropdown"><a class="nav-link dropdown-toggle" href="#"
 							id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true"
-							aria-expanded="false"> ADMIN </a>
-						<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+							aria-expanded="false" style="background-color:#F789EE !important;border-radius:5px;color:white"> ADMIN </a>
+						<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink" style="background-color:#DE2AC5 !important">
 							<a class="dropdown-item" th:href="@{/productos}">Productos</a>
 							<a class="dropdown-item" th:href="@{/administrador/usuarios}">Usuarios</a>
 							<a class="dropdown-item" th:href="@{/administrador/ordenes}">Ordenes</a>
-							<a class="dropdown-item" th:href="@{/usuario/compras}">Compras</a>
 							<a class="dropdown-item" th:href="@{/getCart}">Carrito</a>
 							<a class="dropdown-item" th:href="@{/usuario/cerrar}">Salir</a>
 						</div>

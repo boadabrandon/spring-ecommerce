@@ -25,12 +25,12 @@
 	<div th:fragment="header">
 		<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" style="background-color: #FFC0CB !important">
 			<div class="container">
-				<a class="navbar-brand" th:href="@{/}">Paraíso Shoes</a>
+				<a class="navbar-brand" th:href="@{/}" style="color: #FFFFFF;background-color: #F789EE;border-radius:5px">Paraíso Shoes</a>
 
 				<form class="form-inline my-2 my-lg-0" method="post" th:action="@{/search}">
 					<input class="form-control mr-sm-2" type="search" placeholder="Buscar" aria-label="Search"
 						name="nombre" autocomplete="off">
-					<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Buscar</button>
+					<button class="btn btn-outline-success my-2 my-sm-0" type="submit" style="border:3px solid green">Buscar</button>
 				</form>
 
 
@@ -40,8 +40,8 @@
 				</button>
 				<div class="collapse navbar-collapse" id="navbarResponsive">
 					<ul class="navbar-nav ml-auto">
-						<li class="nav-item"><a class="nav-link" th:href="@{/getCart}">Carrito</a></li>
-						<li class="nav-item"><a class="nav-link" th:href="@{/usuario/login}">Login</a></li>
+						<li class="nav-item"><a class="nav-link" th:href="@{/getCart}" style="background-color:#F789EE !important; color: #FFFFFF;border-radius: 10px">Carrito</a></li>
+						<li class="nav-item"><a class="nav-link" th:href="@{/usuario/login}" style="background-color:#F789EE !important; color: #FFFFFF;border-radius: 10px">Login</a></li>
 					</ul>
 				</div>
 			</div>
@@ -49,14 +49,14 @@
 	</div>
 	
 	<div th:fragment="header-user">
-		<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+		<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" style="background-color: #FFC0CB !important">
 			<div class="container">
-				<a class="navbar-brand" th:href="@{/}">Paraiso Shoes</a>
+				<a class="navbar-brand" th:href="@{/}" style="background-color:#F789EE !important; color: #FFFFFF;border-radius:5px">Paraiso Shoes</a>
 	
 				<form class="form-inline my-2 my-lg-0" method="post" th:action="@{/search}">
 					<input class="form-control mr-sm-2" type="search" placeholder="Buscar" aria-label="Search" name="nombre"
 						autocomplete="off">
-					<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Buscar</button>
+					<button class="btn btn-outline-success my-2 my-sm-0" type="submit" style="border:3px solid green">Buscar</button>
 				</form>
 	
 	
@@ -65,11 +65,11 @@
 					<span class="navbar-toggler-icon"></span>
 				</button>
 				<div class="collapse navbar-collapse" id="navbarResponsive">
-					<ul class="navbar-nav ml-auto">
+					<ul class="navbar-nav ml-auto">	
 						<li class="nav-item dropdown"><a class="nav-link dropdown-toggle" href="#"
 								id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true"
-								aria-expanded="false"> USER </a>
-							<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+								aria-expanded="false" style="background-color:#F789EE !important;border-radius:5px;color:white"> USER </a>
+							<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink" style="background-color:#F789EE !important">
 								<a class="dropdown-item" th:href="@{/usuario/compras}">Compras</a>
 								<a class="dropdown-item" th:href="@{/getCart}">Carrito</a>
 								<a class="dropdown-item" th:href="@{/usuario/cerrar}">Salir</a>
@@ -83,9 +83,9 @@
 
 	<!-- Footer -->
 	<div th:fragment="footer">
-		<footer class="py-5 bg-dark">
+		<footer class="py-5 bg-dark" style="background-color: #FFC0CB !important">
 			<div class="container">
-				<p class="m-0 text-center text-white">Copyright &copy; Paraíso Shoes 2021</p>
+				<p class="m-0 text-center text-white" style="font-size:3em">Paraíso Shoes</p>
 			</div>
 		</footer>
 	</div>
