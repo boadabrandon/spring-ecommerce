@@ -33,28 +33,28 @@
     Paraíso Shoes <small>Productos</small>
   </h1>
 
-  <ol class="breadcrumb">
-    <li class="breadcrumb-item"><a th:href="@{/}">Home</a></li>
-    <li class="breadcrumb-item active">Ver Productos</li>
+  <ol class="breadcrumb" style="background-color: #FFC0CB !important">
+    <li class="breadcrumb-item"><a th:href="@{/}" style="color:#000000">Home</a></li>
+    <li class="breadcrumb-item active" style="color:#000000">Ver Productos</li>
   </ol>
 
   <a class="btn btn-primary" th:href="@{/productos/create}" > Crear Producto</a>
   <h2>Productos</h2>
   <table class="table">
     <thead>
-      <tr>
+      <tr style="text-align: center">
         <th scope="col">Nombre</th>
         <th scope="col">Descripción</th>
-		<th scope="col">Color</th>
-		<th scope="col">Talla</th>
+		    <th scope="col">Color</th>
+		    <th scope="col">Talla</th>
         <th scope="col">Precio</th>
-		<th scope="col">Cantidad</th>
+		    <th scope="col">Cantidad</th>
         <th scope="col">Acción</th>
         <th scope="col">Acción</th>
       </tr>
     </thead>
     <tbody>
-      <tr th:each="producto:${productos}">
+      <tr th:each="producto:${productos}" style="text-align: center">
         <td th:text="${producto.nombre}"></td>
         <td th:text="${producto.descripcion}"></td>
 		<td th:text="${producto.color}"></td>
