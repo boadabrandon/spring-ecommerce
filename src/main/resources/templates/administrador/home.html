@@ -28,9 +28,9 @@
 	<div class="container">
 
 		<!-- Jumbotron Header -->
-		<header class="jumbotron my-4">
-			<h1 class="display-3">Bienvenido a Paraíso Shoes</h1>
-			<p class="lead">Tu tienda de productos en Línea</p>
+		<header class="jumbotron my-4" style="display: flex;flex-direction: column;justify-content: center;align-items: center;height: 4.5em;;text-aling:center;background-color: #FFE1E6">
+			<h1 class="display-3" style="font-size:3.2em;text-aling:center">Bienvenido a Paraíso Shoes</h1>
+			<p class="lead" style="text-aling:center">Tu tienda de productos en Línea</p>
 		</header>
 
 		<!-- Page Features -->
@@ -43,7 +43,7 @@
 						<p class="card-text" th:text="${producto.nombre}"></p>
 					</div>
 					<div class="card-footer">
-						<a th:href="@{/productohome/{id} (id=${producto.id})}" class="btn btn-success">Ver producto</a>
+						<a th:href="@{/productohome/{id} (id=${producto.id})}" class="btn btn-success" style="background-color:#25BD00">Ver producto</a>
 					</div>
 				</div>
 			</div>

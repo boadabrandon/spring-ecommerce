@@ -45,18 +45,17 @@
 			Paraíso Shoes <small>Producto</small>
 		</h1>
 
-		<ol class="breadcrumb">
-			<li class="breadcrumb-item"><a th:href="@{/}">Home</a></li>
-			<li class="breadcrumb-item active">Producto</li>
+		<ol class="breadcrumb" style="background-color:#FFC0CB">
+			<li class="breadcrumb-item"><a th:href="@{/}" style="color: #000000">Home</a></li>
+			<li class="breadcrumb-item active" style="color: #000000">Producto</li>
 		</ol>
 
 		<!-- Blog Post -->
 		<div class="card mb-4">
 			<div class="card-body">
 				<div class="row">
-					<div class="col-lg-6">
-						<a href="#"> <img class="img-fluid rounded" th:src="@{/images/{img}  (img=${producto.imagen})}"
-								alt="">
+					<div class="col-lg-6" style="position: relative; width: 100%; height: 300px; overflow: hidden">
+						<a href="#"> <img class="img-fluid rounded" th:src="@{/images/{img}  (img=${producto.imagen})}" alt="" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover;">
 						</a>
 					</div>
 					<div class="col-lg-6">
@@ -72,15 +71,21 @@
 									<p th:text="'Descripcion: '+ ${producto.descripcion}"></p>
 								</li>
 								<li class="list-group-item">
+									<p th:text="'Disponibles: '+ ${producto.cantidad}"></p>
+								</li>
+								<li class="list-group-item">
+									<p th:text="'Talla: '+ ${producto.talla}"></p>
+								</li>
+								<li class="list-group-item">
 									<h6>
 										Cantidad: <input type="number" id="cantidad" name="cantidad" autocomplete="off"
-											min="1" max="5" value="1">
+											min="1" th:max="${producto.cantidad}" value="1">
 									</h6>
 								</li>
 							</ul>
 
 
-							<button type="submit" class="btn btn-dark">Añadir al carrito </button>
+							<button type="submit" class="btn btn-dark" style="background-color:#25BD00">Añadir al carrito </button>
 
 						</form>
 					</div>

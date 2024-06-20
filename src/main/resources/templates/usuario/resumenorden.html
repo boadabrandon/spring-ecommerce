@@ -45,9 +45,9 @@
 			Paraíso Shoes <small>Resumen de la orden</small>
 		</h1>
 
-		<ol class="breadcrumb">
-			<li class="breadcrumb-item"><a th:href="@{/}">Home</a></li>
-			<li class="breadcrumb-item active">Orden</li>
+		<ol class="breadcrumb" style="background-color:#FFC0CB">
+			<li class="breadcrumb-item"><a th:href="@{/}" style="color: #000000">Home</a></li>
+			<li class="breadcrumb-item active" style="color: #000000">Orden</li>
 		</ol>
 
 		<!-- Blog Post -->
@@ -99,7 +99,7 @@
 							<li class="list-group-item">
 								<h5 th:text="'Total: '+ ${orden.total}"></h5>
 							</li>
-							<a th:href="@{saveOrder}" class="btn btn-dark">Generar</a>
+							<a th:href="@{saveOrder}" class="btn btn-dark" style="background-color:#25BD00">Generar</a>
 						</ul>
 					</div>
 				</div>

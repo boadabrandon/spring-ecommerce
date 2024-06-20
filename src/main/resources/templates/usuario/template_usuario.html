@@ -25,12 +25,12 @@
 	<div th:fragment="header">
 		<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" style="background-color: #FFC0CB !important">
 			<div class="container">
-				<a class="navbar-brand" th:href="@{/}" style="color: #FFFFFF;background-color: #F789EE;border-radius:5px">Paraíso Shoes</a>
+				<a class="navbar-brand" th:href="@{/}" style="color: #FFFFFF;text-shadow:-1px -1px 0 black,1px -1px 0 black,-1px 1px 0 black,1px 1px 0 black">Paraíso Shoes</a>
 
 				<form class="form-inline my-2 my-lg-0" method="post" th:action="@{/search}">
 					<input class="form-control mr-sm-2" type="search" placeholder="Buscar" aria-label="Search"
 						name="nombre" autocomplete="off">
-					<button class="btn btn-outline-success my-2 my-sm-0" type="submit" style="border:3px solid green">Buscar</button>
+					<button class="btn btn-outline-success my-2 my-sm-0" type="submit" style="border:3px;background-color:#25BD00;color: #FFFFFF">Buscar</button>
 				</form>
 
 
@@ -40,8 +40,8 @@
 				</button>
 				<div class="collapse navbar-collapse" id="navbarResponsive">
 					<ul class="navbar-nav ml-auto">
-						<li class="nav-item"><a class="nav-link" th:href="@{/getCart}" style="background-color:#F789EE !important; color: #FFFFFF;border-radius: 10px">Carrito</a></li>
-						<li class="nav-item"><a class="nav-link" th:href="@{/usuario/login}" style="background-color:#F789EE !important; color: #FFFFFF;border-radius: 10px">Login</a></li>
+						<li class="nav-item"><a class="nav-link" th:href="@{/getCart}" style="color:#FFFFFF">Carrito</a></li>
+						<li class="nav-item"><a class="nav-link" th:href="@{/usuario/login}" style="color:#FFFFFF">Login</a></li>
 					</ul>
 				</div>
 			</div>
@@ -51,12 +51,12 @@
 	<div th:fragment="header-user">
 		<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" style="background-color: #FFC0CB !important">
 			<div class="container">
-				<a class="navbar-brand" th:href="@{/}" style="background-color:#F789EE !important; color: #FFFFFF;border-radius:5px">Paraiso Shoes</a>
+				<a class="navbar-brand" th:href="@{/}" style="color: #FFFFFF;text-shadow:-1px -1px 0 black,1px -1px 0 black,-1px 1px 0 black,1px 1px 0 black">Paraiso Shoes</a>
 	
 				<form class="form-inline my-2 my-lg-0" method="post" th:action="@{/search}">
 					<input class="form-control mr-sm-2" type="search" placeholder="Buscar" aria-label="Search" name="nombre"
 						autocomplete="off">
-					<button class="btn btn-outline-success my-2 my-sm-0" type="submit" style="border:3px solid green">Buscar</button>
+					<button class="btn btn-outline-success my-2 my-sm-0" type="submit" style="border:3px;background-color:#25BD00;color: #FFFFFF">Buscar</button>
 				</form>
 	
 	
@@ -68,8 +68,8 @@
 					<ul class="navbar-nav ml-auto">	
 						<li class="nav-item dropdown"><a class="nav-link dropdown-toggle" href="#"
 								id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true"
-								aria-expanded="false" style="background-color:#F789EE !important;border-radius:5px;color:white"> USER </a>
-							<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink" style="background-color:#F789EE !important">
+								aria-expanded="false" style="color: #FFFFFF;text-shadow:-1px -1px 0 black,1px -1px 0 black,-1px 1px 0 black,1px 1px 0 black"> USER </a>
+							<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink" style="background-color:#FFC0CB !important">
 								<a class="dropdown-item" th:href="@{/usuario/compras}">Compras</a>
 								<a class="dropdown-item" th:href="@{/getCart}">Carrito</a>
 								<a class="dropdown-item" th:href="@{/usuario/cerrar}">Salir</a>
@@ -82,10 +82,10 @@
 	</div>
 
 	<!-- Footer -->
-	<div th:fragment="footer">
-		<footer class="py-5 bg-dark" style="background-color: #FFC0CB !important">
+	<div th:fragment="footer" style="background-color: #FFC0CB !important">
+		<footer class="py-5 bg-dark">
 			<div class="container">
-				<p class="m-0 text-center text-white" style="font-size:3em">Paraíso Shoes</p>
+				<p class="m-0 text-center text-white" style="font-size:3em;color: #FFFFFF;text-shadow:-1px -1px 0 black,1px -1px 0 black,-1px 1px 0 black,1px 1px 0 black">Paraíso Shoes</p>
 			</div>
 		</footer>
 	</div>
