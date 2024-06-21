@@ -19,16 +19,16 @@ public class Producto {
 	private String talla;
 	private String imagen;
 	private double precio;
-	private int cantidad;
-	
+	private double cantidad;
+
 	@ManyToOne
 	private Usuario usuario;
-	
+
 	public Producto() {
 	}
 
 	public Producto(Integer id, String nombre, String descripcion, String color, String talla, String imagen,
-			double precio, int cantidad, Usuario usuario) {
+			double precio, double cantidad, Usuario usuario) {
 		super();
 		this.id = id;
 		this.nombre = nombre;
@@ -97,11 +97,11 @@ public class Producto {
 		this.precio = precio;
 	}
 
-	public int getCantidad() {
+	public double getCantidad() {
 		return cantidad;
 	}
 
-	public void setCantidad(int cantidad) {
+	public void setCantidad(double cantidad) {
 		this.cantidad = cantidad;
 	}
 
@@ -118,6 +118,5 @@ public class Producto {
 		return "Producto [id=" + id + ", nombre=" + nombre + ", descripcion=" + descripcion + ", color=" + color
 				+ ", talla=" + talla + ", imagen=" + imagen + ", precio=" + precio + ", cantidad=" + cantidad + "]";
 	}
-	
-	
+
 }
