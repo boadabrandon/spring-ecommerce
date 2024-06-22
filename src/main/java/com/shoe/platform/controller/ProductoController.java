@@ -7,6 +7,7 @@ import org.slf4j.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -99,15 +100,15 @@ public class ProductoController {
 	}
 
 	@GetMapping("/delete/{id}")
-	public String delete(@PathVariable Integer id) {
-
-		Producto p = new Producto();
-		p = productoService.get(id).get();
-
-		if (!p.getImagen().equals("default.jpg")) {
-			upload.deleteImage(p.getImagen());
+	public String eliminar(@PathVariable Integer id) {
+		Optional<Producto> optionalProducto = productoService.get(id);
+		if (optionalProducto.isPresent()) {
+			Producto p = optionalProducto.get();
+			if (!p.getImagen().equals("default.jpg")) {
+				upload.deleteImage(p.getImagen());
+			}
+			productoService.delete(id);
 		}
-		productoService.delete(id);
 		return "redirect:/productos";
 	}
 

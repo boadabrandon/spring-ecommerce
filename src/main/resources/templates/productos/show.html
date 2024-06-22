@@ -17,6 +17,14 @@
   <!-- Custom styles for this template -->
   <link th:href="@{css/heroic-features.css}" rel="stylesheet">
 
+
+  <!-- Cargar jQuery -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<!-- Cargar SweetAlert -->
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+  <script src="funciones.js"></script>
 </head>
 
 <body>
@@ -34,11 +42,11 @@
   </h1>
 
   <ol class="breadcrumb" style="background-color: #FFC0CB !important">
-    <li class="breadcrumb-item"><a th:href="@{/}" style="color:#000000">Home</a></li>
+    <li class="breadcrumb-item"><a th:href="@{/}" style="color: #000000;text-shadow:-0.5px -0.5px 0 white,0.5px -0.5px 0 white,-0.5px 0.5px 0 white,0.5px 0.5px 0 white">Inicio</a></li>
     <li class="breadcrumb-item active" style="color:#000000">Ver Productos</li>
   </ol>
 
-  <a class="btn btn-primary" th:href="@{/productos/create}" > Crear Producto</a>
+  <a class="btn btn-primary" th:href="@{/productos/create}" style="border:3px;background-color:#25BD00;color: #FFFFFF"> Crear Producto</a>
   <h2>Productos</h2>
   <table class="table">
     <thead>
@@ -62,7 +70,7 @@
         <td th:text="${producto.precio}"></td>
 		<td th:text="${producto.cantidad}"></td>
         <td><a  class="btn btn-warning" th:href="@{productos/edit/{id} (id=${producto.id}) }">Editar</a> </td>
-        <td><a  class="btn btn-danger" 	th:href="@{productos/delete/{id} (id=${producto.id}) }">Eliminar</a> </td>
+        <td><a  class="btn btn-danger"  th:attr="onclick='eliminar(' + ${producto.id} + ');'">Eliminar</a> </td>
       </tr>       
     </tbody>
   </table>

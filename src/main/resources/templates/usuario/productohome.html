@@ -46,7 +46,7 @@
 		</h1>
 
 		<ol class="breadcrumb" style="background-color:#FFC0CB">
-			<li class="breadcrumb-item"><a th:href="@{/}" style="color: #000000">Inicio</a></li>
+			<li class="breadcrumb-item"><a th:href="@{/}" style="color: #000000;text-shadow:-0.5px -0.5px 0 white,0.5px -0.5px 0 white,-0.5px 0.5px 0 white,0.5px 0.5px 0 white">Inicio</a></li>
 			<li class="breadcrumb-item active" style="color: #000000">Producto</li>
 		</ol>
 
@@ -54,8 +54,8 @@
 		<div class="card mb-4">
 			<div class="card-body">
 				<div class="row">
-					<div class="col-lg-6" style="position: relative; width: 100%; height: 300px; overflow: hidden">
-						<a href="#"> <img class="img-fluid rounded" th:src="@{/images/{img}  (img=${producto.imagen})}" alt="" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover;">
+					<div class="col-lg-6">
+						<a href="#"> <img class="img-fluid rounded" th:src="@{/images/{img}  (img=${producto.imagen})}" alt="">
 						</a>
 					</div>
 					<div class="col-lg-6">
