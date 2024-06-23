@@ -99,15 +99,15 @@ public class ProductoController {
 	}
 
 	@GetMapping("/delete/{id}")
-	public String delete(@PathVariable Integer id) {
-
-		Producto p = new Producto();
-		p = productoService.get(id).get();
-
-		if (!p.getImagen().equals("default.jpg")) {
-			upload.deleteImage(p.getImagen());
+	public String eliminar(@PathVariable Integer id) {
+		Optional<Producto> optionalProducto = productoService.get(id);
+		if (optionalProducto.isPresent()) {
+			Producto p = optionalProducto.get();
+			if (!p.getImagen().equals("default.jpg")) {
+				upload.deleteImage(p.getImagen());
+			}
+			productoService.delete(id);
 		}
-		productoService.delete(id);
 		return "redirect:/productos";
 	}
 

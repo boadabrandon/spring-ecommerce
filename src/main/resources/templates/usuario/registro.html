@@ -17,6 +17,11 @@
 	<!-- Custom styles for this template -->
 	<link th:href="@{/css/heroic-features.css}" rel="stylesheet">
 
+  <!-- Cargar jQuery -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+  <!-- Cargar SweetAlert -->
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 </head>
 
 <body>
@@ -55,7 +60,7 @@
       </div>
   </div>
 
-  <form th:action="@{/usuario/save}" method="post">
+  <form th:action="@{/usuario/save}" method="post" id="registroForm">
       <div class="form-group">
           <label for="nombre" style="color: #ff69b4;">Nombres:</label>
           <input type="text" class="form-control" id="nombre" name="nombre" required placeholder="Ingrese sus nombres" autocomplete="off" style="border: 1px solid #ff69b4; border-radius: 5px;">
@@ -87,9 +92,20 @@
       </div>
 
       <div class="form-group text-center">
-          <button type="submit" class="btn btn-dark" style="background-color: #ff69b4; border-color: #ff69b4;">Guardar</button>
+          <button type="button" class="btn btn-dark" style="background-color: #ff69b4; border-color: #ff69b4" onclick="guardarRegistro()">Guardar</button>
       </div>
   </form>
+  <script>
+    function guardarRegistro() {
+      swal({
+        title: "Registro guardado",
+        icon: "success",
+        button: "OK",
+      }).then(() => {
+        document.getElementById("registroForm").submit();
+      });
+    }
+  </script>
 </div>
 
   <!-- /.container -->
@@ -100,7 +116,5 @@
 	<!-- Bootstrap core JavaScript -->
 	<script th:src="@{/vendor/jquery/jquery.min.js}"></script>
 	<script th:src="@{/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
-
 </body>
-
 </html>

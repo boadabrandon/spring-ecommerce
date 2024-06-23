@@ -22,24 +22,24 @@ import com.shoe.platform.service.ProductoService;
 public class AdministradorController {
 
 	private static final Logger log = LoggerFactory.getLogger(AdministradorController.class);
-	
+
 	@Autowired
 	private ProductoService productoService;
-	
+
 	@Autowired
 	private IUsuarioService iUsuarioService;
 
 	@Autowired
 	private IOrdenService iOrdenService;
-	
+
 	@GetMapping("")
 	public String home(Model model) {
-		
+
 		List<Producto> productos = productoService.findAll();
-		model.addAttribute("productos",productos);
+		model.addAttribute("productos", productos);
 		return "administrador/home";
 	}
-	
+
 	@GetMapping("/usuarios")
 	public String usuarios(Model model) {
 		model.addAttribute("usuarios", iUsuarioService.findAll());
@@ -47,14 +47,14 @@ public class AdministradorController {
 	}
 
 	@GetMapping("/ordenes")
-	public String ordenes(Model model){
+	public String ordenes(Model model) {
 		model.addAttribute("ordenes", iOrdenService.findAll());
 		return "administrador/ordenes";
 	}
 
 	@GetMapping("/detalle/{id}")
-	public String detalle(Model model, @PathVariable Integer id){
-		log.info("Id de la orden: {}",id);
+	public String detalle(Model model, @PathVariable Integer id) {
+		log.info("Id de la orden: {}", id);
 		Orden orden = iOrdenService.findById(id).get();
 
 		model.addAttribute("detalles", orden.getDetalle());
