@@ -1,11 +1,17 @@
 package com.shoe.platform.model;
 
+import java.util.Collection;
 import java.util.List;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
@@ -21,8 +27,11 @@ public class Usuario {
 	private String email;
 	private String direccion;
 	private String telefono;
-	private String tipo;
 	private String password;
+
+	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@JoinTable(name = "usuario_roles", joinColumns = @JoinColumn(name = "usuario_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
+	private Collection<Rol> roles;
 
 	@OneToMany(mappedBy = "usuario")
 	private List<Producto> productos;
@@ -42,7 +51,6 @@ public class Usuario {
 		this.email = email;
 		this.direccion = direccion;
 		this.telefono = telefono;
-		this.tipo = tipo;
 		this.password = password;
 	}
 
@@ -94,14 +102,6 @@ public class Usuario {
 		this.telefono = telefono;
 	}
 
-	public String getTipo() {
-		return tipo;
-	}
-
-	public void setTipo(String tipo) {
-		this.tipo = tipo;
-	}
-
 	public String getPassword() {
 		return password;
 	}
@@ -121,7 +121,7 @@ public class Usuario {
 	@Override
 	public String toString() {
 		return "Usuario [id=" + id + ", nombre=" + nombre + ", username=" + username + ", email=" + email
-				+ ", direccion=" + direccion + ", telefono=" + telefono + ", tipo=" + tipo + ", password=" + password
+				+ ", direccion=" + direccion + ", telefono=" + telefono + ", password=" + password
 				+ "]";
 	}
 
