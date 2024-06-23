@@ -69,8 +69,8 @@
 		<td th:text="${producto.talla}"></td>
         <td th:text="${producto.precio}"></td>
 		<td th:text="${producto.cantidad}"></td>
-        <td><a  class="btn btn-warning" th:href="@{productos/edit/{id} (id=${producto.id}) }">Editar</a> </td>
-        <td><a  class="btn btn-danger"  th:attr="onclick='eliminar(' + ${producto.id} + ');'">Eliminar</a> </td>
+        <td><a  class="btn btn-warning" th:href="@{productos/edit/{id} (id=${producto.id}) }" style="color:#FFFFFF">Editar</a> </td>
+        <td><a  class="btn btn-danger"  th:attr="onclick='eliminar(' + ${producto.id} + ');'" style="color:#FFFFFF">Eliminar</a> </td>
       </tr>       
     </tbody>
   </table>

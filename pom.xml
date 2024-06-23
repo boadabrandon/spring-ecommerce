@@ -51,13 +51,8 @@
             <version>6.0.0.Final</version>
 		</dependency>
 		<dependency>
-<<<<<<< HEAD
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-security</artifactId>
-=======
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-security</artifactId>
->>>>>>> prueba
 		</dependency>
  	</dependencies>
 
