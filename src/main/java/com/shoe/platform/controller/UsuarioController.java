@@ -100,6 +100,12 @@ public class UsuarioController {
 		return "usuario/detallecompra";
 	}
 
+	@GetMapping("/archivoPdf/{id}")
+	public String archivoPdf(@PathVariable Integer Id, HttpSession session, Model model) {
+
+		return "usuario/pdf";
+	}
+
 	@GetMapping("/cerrar")
 	public String cerrarSesion(HttpSession session) {
 		session.removeAttribute("idusuario");

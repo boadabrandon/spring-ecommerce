@@ -1,17 +1,11 @@
 package com.shoe.platform.model;
 
-import java.util.Collection;
 import java.util.List;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
@@ -25,13 +19,10 @@ public class Usuario {
 	private String nombre;
 	private String username;
 	private String email;
+	private String tipo;
 	private String direccion;
 	private String telefono;
 	private String password;
-
-	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	@JoinTable(name = "usuario_roles", joinColumns = @JoinColumn(name = "usuario_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
-	private Collection<Rol> roles;
 
 	@OneToMany(mappedBy = "usuario")
 	private List<Producto> productos;
@@ -42,16 +33,18 @@ public class Usuario {
 	public Usuario() {
 	}
 
-	public Usuario(Integer id, String nombre, String username, String email, String direccion, String telefono,
-			String tipo, String password) {
-		super();
+	public Usuario(Integer id, String nombre, String username, String email, String tipo, String direccion,
+			String telefono, String password, List<Producto> productos, List<Orden> ordenes) {
 		this.id = id;
 		this.nombre = nombre;
 		this.username = username;
 		this.email = email;
+		this.tipo = tipo;
 		this.direccion = direccion;
 		this.telefono = telefono;
 		this.password = password;
+		this.productos = productos;
+		this.ordenes = ordenes;
 	}
 
 	public Integer getId() {
@@ -118,11 +111,27 @@ public class Usuario {
 		this.productos = productos;
 	}
 
+	public String getTipo() {
+		return tipo;
+	}
+
+	public void setTipo(String tipo) {
+		this.tipo = tipo;
+	}
+
+	public List<Orden> getOrdenes() {
+		return ordenes;
+	}
+
+	public void setOrdenes(List<Orden> ordenes) {
+		this.ordenes = ordenes;
+	}
+
 	@Override
 	public String toString() {
-		return "Usuario [id=" + id + ", nombre=" + nombre + ", username=" + username + ", email=" + email
-				+ ", direccion=" + direccion + ", telefono=" + telefono + ", password=" + password
-				+ "]";
+		return "Usuario [id=" + id + ", nombre=" + nombre + ", username=" + username + ", email=" + email + ", tipo="
+				+ tipo + ", direccion=" + direccion + ", telefono=" + telefono + ", password=" + password
+				+ ", productos=" + productos + ", ordenes=" + ordenes + "]";
 	}
 
 }
