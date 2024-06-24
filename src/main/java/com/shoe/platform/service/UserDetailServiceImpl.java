@@ -34,8 +34,10 @@ public class UserDetailServiceImpl implements UserDetailsService {
             Usuario usuario = optionalUser.get();
             return User.builder().username(usuario.getNombre()).password(bCrypt.encode(usuario.getPassword()))
                     .roles(usuario.getTipo()).build();
+        } else {
+            throw new UsernameNotFoundException("Usuario no encontrado");
         }
-        return null;
+
     }
 
 }
