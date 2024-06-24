@@ -7,11 +7,11 @@ import com.shoe.platform.model.DetalleOrden;
 import com.shoe.platform.repository.IDetalleOrdenRepository;
 
 @Service
-public class DetalleOrdenServiceImpl implements IDetalleOrdenService{
-	
+public class DetalleOrdenServiceImpl implements IDetalleOrdenService {
+
 	@Autowired
 	private IDetalleOrdenRepository detalleOrdenRepository;
-	
+
 	@Override
 	public DetalleOrden save(DetalleOrden detalleOrden) {
 		return detalleOrdenRepository.save(detalleOrden);

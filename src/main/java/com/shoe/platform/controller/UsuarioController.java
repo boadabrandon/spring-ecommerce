@@ -1,5 +1,6 @@
 package com.shoe.platform.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -12,8 +13,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.shoe.platform.model.DetalleOrden;
 import com.shoe.platform.model.Orden;
 import com.shoe.platform.model.Usuario;
+import com.shoe.platform.service.IDetalleOrdenService;
 import com.shoe.platform.service.IOrdenService;
 import com.shoe.platform.service.IUsuarioService;
 
@@ -32,6 +35,9 @@ public class UsuarioController {
 
 	@Autowired
 	private IOrdenService iOrdenService;
+
+	@Autowired
+	private IDetalleOrdenService iDetalleOrdenService;
 
 	@GetMapping("/registro")
 	public String create() {
@@ -101,9 +107,21 @@ public class UsuarioController {
 	}
 
 	@GetMapping("/archivoPdf/{id}")
-	public String archivoPdf(@PathVariable Integer Id, HttpSession session, Model model) {
+	public String archivoPdf(@PathVariable("id") Integer Id, HttpSession session, Model model) {
+		Object idUsuario = session.getAttribute("idusuario");
 
-		return "usuario/pdf";
+		if (idUsuario != null) {
+			Optional<Usuario> optionalUsuario = iUsuarioService.findById(Integer.parseInt(idUsuario.toString()));
+			Orden orden = iOrdenService.findById(Id).get();
+			List<DetalleOrden> detalles = orden.getDetalle();
+
+			Usuario usuario = optionalUsuario.get();
+			model.addAttribute("cart", detalles);
+			model.addAttribute("orden", orden);
+			model.addAttribute("usuario", usuario);
+			return "usuario/pdf";
+		}
+		return "usuario/login";
 	}
 
 	@GetMapping("/cerrar")
