@@ -1,120 +1,124 @@
 <!DOCTYPE html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
-
 <head>
-
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	<meta name="description" content="">
-	<meta name="author" content="">
-
-	<title>Paraíso Shoes</title>
-
-
-	<!-- Bootstrap core CSS -->
-	<link th:href="@{/vendor/bootstrap/css/bootstrap.min.css}" rel="stylesheet">
-
-	<!-- Custom styles for this template -->
-	<link th:href="@{/css/heroic-features.css}" rel="stylesheet">
-
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Paraíso Shoes</title>
+    <link th:href="@{/vendor/bootstrap/css/bootstrap.min.css}" rel="stylesheet">
+    <link th:href="@{/css/heroic-features.css}" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 </head>
-
 <body>
+    <!-- Navigation -->
+    <div th:if="${session.idusuario == null}">
+        <div th:include="usuario/template_usuario.html::header"></div>
+    </div>
+    <div th:unless="${session.idusuario == null}">
+        <div th:if="${session.tipoUsuario == 'USER'}">
+            <div th:include="usuario/template_usuario.html::header-user"></div>
+        </div>
+        <div th:if="${session.tipoUsuario == 'ADMIN'}">
+            <div th:include="administrador/template_admin.html::header"></div>
+        </div>
+    </div>
+    <!-- Page Content -->
+    <div class="container">
+        <!-- Page Heading/Breadcrumbs -->
+        <h1 class="mt-4 mb-3">
+            <a style="color: #000000;text-shadow:-0.5px -0.5px 0 white,0.5px -0.5px 0 white,-0.5px 0.5px 0 white,0.5px 0.5px 0 white">Paraíso Shoes</a>
+            <small>Resumen de la orden</small>
+        </h1>
+        <ol class="breadcrumb" style="background-color:#FFC0CB">
+            <li class="breadcrumb-item"><a th:href="@{/}" style="color: #000000;text-shadow:-0.5px -0.5px 0 white,0.5px -0.5px 0 white,-0.5px 0.5px 0 white,0.5px 0.5px 0 white">Inicio</a></li>
+            <li class="breadcrumb-item active" style="color: #000000">Orden</li>
+        </ol>
+        <!-- Blog Post -->
+        <div class="card mb-4">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-lg-9">
+                        <div class="card-body">
+                            <h5 class="card-title">DATOS ORDEN</h5>
+                            <h6 th:text="'Nombre: '+${usuario.nombre}"></h6>
+                            <h6 th:text="'Correo: '+${usuario.email}"></h6>
+                            <h6 th:text="'Direccion: '+${usuario.direccion}"></h6>
+                            <h5 class="card-title">PRODUCTOS</h5>
+                            <div class="alert alert-light" role="alert">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">Producto</th>
+                                            <th scope="col">Precio</th>
+                                            <th scope="col">Cantidad</th>
+                                            <th scope="col">Total</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr th:each="dtorden:${cart}">
+                                            <td th:text="${dtorden.nombre}"></td>
+                                            <td th:text="${dtorden.precio}"></td>
+                                            <td th:text="${dtorden.cantidad}"></td>
+                                            <td th:text="${dtorden.total}"></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <h2 class="card-title">Resumen Orden</h2>
+                        <ul class="list-group">
+                            <li class="list-group-item">
+                                <h5 th:text="'Total: '+ ${orden.total}"></h5>
+                            </li>
+                            <button id="btnGenerarOrden" class="btn btn-dark" style="background-color:#25BD00">Generar</button>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /.container -->
+    <!-- Footer -->
+    <div th:include="usuario/template_usuario.html::footer"></div>
+    <!-- Bootstrap core JavaScript -->
+    <script th:src="@{/vendor/jquery/jquery.min.js}"></script>
+    <script th:src="@{/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
 
-	<!-- Navigation -->
-	<div th:if="${session.idusuario == null}">
-		<div th:include="usuario/template_usuario.html::header"></div>
-	</div>
-
-	<div th:unless="${session.idusuario == null}">
-		<div th:if="${session.tipoUsuario == 'USER'}">
-			<div th:include="usuario/template_usuario.html::header-user"></div>
-		</div>
-
-		<div th:if="${session.tipoUsuario == 'ADMIN'}">
-			<div th:include="administrador/template_admin.html::header"></div>
-		</div>
-	</div>
-
-	<!-- Page Content -->
-	<div class="container">
-
-
-		<!-- Page Heading/Breadcrumbs -->
-		<h1 class="mt-4 mb-3">
-			Paraíso Shoes <small>Resumen de la orden</small>
-		</h1>
-
-		<ol class="breadcrumb" style="background-color:#FFC0CB">
-			<li class="breadcrumb-item"><a th:href="@{/}" style="color: #000000;text-shadow:-0.5px -0.5px 0 white,0.5px -0.5px 0 white,-0.5px 0.5px 0 white,0.5px 0.5px 0 white">Inicio</a></li>
-			<li class="breadcrumb-item active" style="color: #000000">Orden</li>
-		</ol>
-
-		<!-- Blog Post -->
-		<div class="card mb-4">
-			<div class="card-body">
-				<div class="row">
-					<div class="col-lg-9">
-						<div class="card-body">
-							<h5 class="card-title">
-								DATOS ORDEN
-							</h5>
-							<h6 th:text="'Nombre: '+${usuario.nombre}"></h6>
-							<h6 th:text="'Correo: '+${usuario.email}"></h6>
-							<h6 th:text="'Direccion: '+${usuario.direccion}"></h6>
-
-							<h5 class="card-title">
-								PRODUCTOS
-							</h5>
-							<div class="alert alert-light" role="alert">
-								<table class="table">
-									<thead>
-										<tr>
-											<th scope="col">Producto</th>
-											<th scope="col">Precio</th>
-											<th scope="col">Cantidad</th>
-											<th scope="col">Total</th>
-										</tr>
-									</thead>
-									<tbody>
-										<tr th:each="dtorden:${cart}">
-											<td th:text="${dtorden.nombre}"></td>
-											<td th:text="${dtorden.precio}"></td>
-											<td th:text="${dtorden.cantidad}"></td>
-											<td th:text="${dtorden.total}"></td>
-
-										</tr>
-									</tbody>
-								</table>
-							</div>
-
-						</div>
-					</div>
-
-
-					<div class="col-lg-3">
-						<h2 class="card-title">Resumen Orden</h2>
-
-						<ul class="list-group">
-							<li class="list-group-item">
-								<h5 th:text="'Total: '+ ${orden.total}"></h5>
-							</li>
-							<a th:href="@{saveOrder}" class="btn btn-dark" style="background-color:#25BD00">Generar</a>
-						</ul>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-	<!-- /.container -->
-
-	<!-- Footer -->
-	<div th:include="usuario/template_usuario.html::footer"></div>
-
-	<!-- Bootstrap core JavaScript -->
-	<script th:src="@{/vendor/jquery/jquery.min.js}"></script>
-	<script th:src="@{/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
-
+    <script>
+        document.getElementById('btnGenerarOrden').addEventListener('click', function() {
+            fetch('/saveOrder', {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+            }).then(response => response.json()).then(data => {
+                if (data.status === 'success') {
+                    swal({
+                        title: "Orden realizada",
+                        icon: "success",
+                        button: "OK",
+                    }).then(() => {
+                        window.location.href = 'usuario/compras';
+                    });
+                } else {
+                    swal({
+                        title: "Error al realizar la orden",
+                        icon: "error",
+                        button: "OK",
+                    });
+                }
+            }).catch(error => {
+                swal({
+                    title: "Error al realizar la orden",
+                    icon: "error",
+                    button: "OK",
+                });
+            });
+        });
+    </script>
 </body>
-
 </html>

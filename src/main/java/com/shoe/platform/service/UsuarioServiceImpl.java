@@ -11,7 +11,7 @@ import com.shoe.platform.repository.IUsuarioRepository;
 
 @Service
 public class UsuarioServiceImpl implements IUsuarioService {
-	
+
 	@Autowired
 	private IUsuarioRepository usuarioRepository;
 
@@ -34,6 +34,4 @@ public class UsuarioServiceImpl implements IUsuarioService {
 	public List<Usuario> findAll() {
 		return usuarioRepository.findAll();
 	}
-
-
 }

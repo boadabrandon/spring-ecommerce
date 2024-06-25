@@ -1,152 +1,167 @@
 <!DOCTYPE html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
-
 <head>
-
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	<meta name="description" content="">
-	<meta name="author" content="">
-
-	<title>Paraíso Shoes</title>
-
-
-	<!-- Bootstrap core CSS -->
-	<link th:href="@{/vendor/bootstrap/css/bootstrap.min.css}" rel="stylesheet">
-
-	<!-- Custom styles for this template -->
-	<link th:href="@{/css/heroic-features.css}" rel="stylesheet">
-    <script src="html2pdf.bundle.min.js"></script>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Paraíso Shoes - Factura</title>
+    <!-- Bootstrap core CSS -->
+    <link th:href="@{/vendor/bootstrap/css/bootstrap.min.css}" rel="stylesheet">
+    <!-- Custom styles for this template -->
+    <link th:href="@{/css/heroic-features.css}" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <style>
+        body, html {
+            height: 100%;
+            margin: 0;
+        }
+        .invoice-container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+            padding: 20px;
+            background: #f8f9fa;
+        }
+        .invoice-content {
+            max-width: 900px;
+            width: 100%;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            background: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+        }
+        .invoice-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .invoice-header img {
+            max-width: 150px;
+            margin-bottom: 20px;
+        }
+        .invoice-title {
+            font-size: 2em;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .invoice-details, .invoice-footer {
+            margin-bottom: 20px;
+        }
+        .invoice-details h6, .invoice-footer h5 {
+            margin: 0;
+        }
+        .table th, .table td {
+            vertical-align: middle;
+        }
+        .table thead th {
+            background: #f8f9fa;
+        }
+        .table tfoot th {
+            border-top: 2px solid #dee2e6;
+        }
+        .list-group-item {
+            background: #f8f9fa;
+        }
+        .return-home {
+            display: block;
+            margin-top: 20px;
+            text-align: center;
+        }
+    </style>
 </head>
-
 <body>
+    <div class="invoice-container">
+        <div class="invoice-content">
+            <div class="invoice-header">
+                <a href="/">
+                    <img src="logo.png" alt="Paraíso Shoes">
+                    <div class="invoice-title">Paraíso Shoes</div>
+                </a>
+                <div class="invoice-subtitle">Resumen de la Orden</div>
+            </div>
+            <div class="invoice-details">
+                <h5 class="card-title">DATOS ORDEN</h5>
+                <h6 th:text="'Nombre: ' + ${usuario.nombre}" style="margin-bottom: 5px;"></h6>
+                <h6 th:text="'Correo: ' + ${usuario.email}" style="margin-bottom: 5px;"></h6>
+                <h6 th:text="'Dirección: ' + ${usuario.direccion}" style="margin-bottom: 5px;"></h6>
+            </div>
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">PRODUCTOS</h5>
+                    <div class="alert alert-light" role="alert">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Producto</th>
+                                    <th scope="col">Precio</th>
+                                    <th scope="col">Cantidad</th>
+                                    <th scope="col">Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr th:each="dtorden : ${cart}">
+                                    <td th:text="${dtorden.nombre}"></td>
+                                    <td th:text="${dtorden.precio}"></td>
+                                    <td th:text="${dtorden.cantidad}"></td>
+                                    <td th:text="${dtorden.total}"></td>
+                                </tr>
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <th colspan="3">Total</th>
+                                    <th th:text="${orden.total}"></th>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="invoice-footer">
+                <ul class="list-group">
+                    <li class="list-group-item">
+                        <h5 th:text="'Total: ' + ${orden.total}"></h5>
+                    </li>
+                </ul>
+                <button id="btnCrearPdf" class="btn btn-primary mt-3">Generar PDF</button>
+                <a href="/" class="return-home">Volver a Inicio</a>
+            </div>
+        </div>
+    </div>
 
-	<!-- Navigation -->
-	<div th:if="${session.idusuario == null}">
-		<div th:include="usuario/template_usuario.html::header"></div>
-	</div>
-
-	<div th:unless="${session.idusuario == null}">
-		<div th:if="${session.tipoUsuario == 'USER'}">
-			<div th:include="usuario/template_usuario.html::header-user"></div>
-		</div>
-
-		<div th:if="${session.tipoUsuario == 'ADMIN'}">
-			<div th:include="administrador/template_admin.html::header"></div>
-		</div>
-	</div>
-
-	<!-- Page Content -->
-	<div class="container">
-
-
-		<!-- Page Heading/Breadcrumbs -->
-		<h1 class="mt-4 mb-3">
-			Paraíso Shoes <small>Resumen de la orden</small>
-		</h1>
-
-		<ol class="breadcrumb" style="background-color:#FFC0CB">
-			<li class="breadcrumb-item"><a th:href="@{/}" style="color: #000000;text-shadow:-0.5px -0.5px 0 white,0.5px -0.5px 0 white,-0.5px 0.5px 0 white,0.5px 0.5px 0 white">Inicio</a></li>
-			<li class="breadcrumb-item active" style="color: #000000">Orden</li>
-		</ol>
-
-		<!-- Blog Post -->
-		<div class="card mb-4">
-			<div class="card-body">
-				<div class="row">
-					<div class="col-lg-9">
-						<div class="card-body">
-							<h5 class="card-title">
-								DATOS ORDEN
-							</h5>
-							<h6 th:text="'Nombre: '+${usuario.nombre}"></h6>
-							<h6 th:text="'Correo: '+${usuario.email}"></h6>
-							<h6 th:text="'Direccion: '+${usuario.direccion}"></h6>
-
-							<h5 class="card-title">
-								PRODUCTOS
-							</h5>
-							<div class="alert alert-light" role="alert">
-								<table class="table">
-									<thead>
-										<tr>
-											<th scope="col">Producto</th>
-											<th scope="col">Precio</th>
-											<th scope="col">Cantidad</th>
-											<th scope="col">Total</th>
-										</tr>
-									</thead>
-									<tbody>
-										<tr th:each="dtorden:${cart}">
-											<td th:text="${dtorden.nombre}"></td>
-											<td th:text="${dtorden.precio}"></td>
-											<td th:text="${dtorden.cantidad}"></td>
-											<td th:text="${dtorden.total}"></td>
-
-										</tr>
-									</tbody>
-								</table>
-							</div>
-
-						</div>
-					</div>
-
-
-					<div class="col-lg-3">
-						<h2 class="card-title">Resumen Orden</h2>
-
-						<ul class="list-group">
-							<li class="list-group-item">
-								<h5 th:text="'Total: '+ ${orden.total}"></h5>
-							</li>
-							<button id="btnCrearPdf" src="generarPdf()">Click aquí</button>
-						</ul>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-	<!-- /.container -->
-
-	<!-- Footer -->
-	<div th:include="usuario/template_usuario.html::footer"></div>
-
-	<!-- Bootstrap core JavaScript -->
-	<script th:src="@{/vendor/jquery/jquery.min.js}"></script>
-	<script th:src="@{/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
-	<script>
-		function generarPdf(){
-			document.addEventListener("DOMContentLoaded", () => {
-				// Escuchamos el click del botón
-				const $boton = document.querySelector("#btnCrearPdf");
-				$boton.addEventListener("click", () => {
-					const $elementoParaConvertir = document.body; // <-- Aquí puedes elegir cualquier elemento del DOM
-					html2pdf()
-						.set({
-							margin: 1,
-							filename: 'documento. pdf',
-							image: {
-								type: 'jpeg',
-								quality: 0.98
-							},
-							html2canvas: {
-								scale: 3, // A mayor escala, mejores gráficos, pero más peso
-								letterRendering: true,
-							},
-							jsPDF: {
-								unit: "in",
-								format: "a3",
-								orientation: 'portrait' // landscape o portrait
-							}
-						})
-						.from($elementoParaConvertir)
-						.save()
-						.catch(err => console.log(err));
-				});
-			});
-		}
-	</script>
-
+    <!-- Bootstrap core JavaScript -->
+    <script th:src="@{/vendor/jquery/jquery.min.js}"></>
+    <script th:src="@{/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const boton = document.querySelector("#btnCrearPdf");
+            boton.addEventListener("click", () => {
+                const elementoParaConvertir = document.querySelector(".invoice-content");
+                html2pdf()
+                    .set({
+                        margin: 1,
+                        filename: 'factura.pdf',
+                        image: {
+                            type: 'jpeg',
+                            quality: 0.98
+                        },
+                        html2canvas: {
+                            scale: 3,
+                            letterRendering: true,
+                        },
+                        jsPDF: {
+                            unit: "in",
+                            format: "a4",
+                            orientation: 'portrait'
+                        }
+                    })
+                    .from(elementoParaConvertir)
+                    .save()
+                    .catch(err => console.log(err));
+            });
+        });
+    </script>
 </body>
-
 </html>

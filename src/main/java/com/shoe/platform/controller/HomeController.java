@@ -2,7 +2,9 @@ package com.shoe.platform.controller;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.shoe.platform.model.DetalleOrden;
 import com.shoe.platform.model.Orden;
@@ -46,10 +49,8 @@ public class HomeController {
 	@Autowired
 	private IDetalleOrdenService iDetalleOrdenService;
 
-	// Almacena los detalles de la orden
 	List<DetalleOrden> detalles = new ArrayList<DetalleOrden>();
 
-	// Datos de la orden
 	Orden orden = new Orden();
 
 	@GetMapping("")
@@ -94,7 +95,6 @@ public class HomeController {
 		detalleOrden.setTotal(producto.getPrecio() * cantidad);
 		detalleOrden.setProducto(producto);
 
-		// validar que el producto no se añada mas de una vez
 		Integer idProducto = producto.getId();
 		boolean ingresado = detalles.stream().anyMatch(p -> p.getProducto().getId() == idProducto);
 		if (!ingresado) {
@@ -109,11 +109,9 @@ public class HomeController {
 		return "usuario/carrito";
 	}
 
-	// Quitar un producto del carrito
 	@GetMapping("/delete/cart/{id}")
 	public String deleteProductoCart(@PathVariable Integer id, Model model) {
 
-		// lista nueva de productos
 		List<DetalleOrden> ordenesNuevas = new ArrayList<DetalleOrden>();
 
 		for (DetalleOrden detalleOrden : detalles) {
@@ -121,7 +119,6 @@ public class HomeController {
 				ordenesNuevas.add(detalleOrden);
 			}
 		}
-		// Nueva lista con productos que sobran
 		detalles = ordenesNuevas;
 
 		double sumaTotal = 0;
@@ -152,7 +149,6 @@ public class HomeController {
 		if (idUsuario != null) {
 			Optional<Usuario> optionalUsuario = iUsuarioService.findById(Integer.parseInt(idUsuario.toString()));
 
-			// Verificar si el usuario existe
 			if (optionalUsuario.isPresent()) {
 				Usuario usuario = optionalUsuario.get();
 				model.addAttribute("cart", detalles);
@@ -165,34 +161,39 @@ public class HomeController {
 	}
 
 	@GetMapping("/saveOrder")
-	public String saveOrder(HttpSession session) {
-		Date fechaCreacion = new Date();
-		orden.setFechaCreacion(fechaCreacion);
-		orden.setNumero(iOrdenService.generarNumeroOrden());
+	@ResponseBody
+	public Map<String, String> saveOrder(HttpSession session) {
+		Map<String, String> response = new HashMap<>();
 
-		// usuario
-		Usuario usuario = iUsuarioService.findById(Integer.parseInt(session.getAttribute("idusuario").toString()))
-				.get();
+		try {
+			Date fechaCreacion = new Date();
+			orden.setFechaCreacion(fechaCreacion);
+			orden.setNumero(iOrdenService.generarNumeroOrden());
 
-		orden.setUsuario(usuario);
-		iOrdenService.save(orden);
+			Usuario usuario = iUsuarioService.findById(Integer.parseInt(session.getAttribute("idusuario").toString()))
+					.get();
+			orden.setUsuario(usuario);
+			iOrdenService.save(orden);
 
-		// guardar detalles
-		for (DetalleOrden dt : detalles) {
-			// Reducir la cantidad en stock del producto
-			Producto producto = dt.getProducto();
-			double nuevaCantidad = producto.getCantidad() - dt.getCantidad();
-			producto.setCantidad(nuevaCantidad);
-			productoService.save(producto);
-			dt.setOrden(orden);
-			iDetalleOrdenService.save(dt);
+			for (DetalleOrden dt : detalles) {
+				Producto producto = dt.getProducto();
+				double nuevaCantidad = producto.getCantidad() - dt.getCantidad();
+				producto.setCantidad(nuevaCantidad);
+				productoService.save(producto);
+				dt.setOrden(orden);
+				iDetalleOrdenService.save(dt);
+			}
+
+			orden = new Orden();
+			detalles.clear();
+
+			response.put("status", "success");
+			response.put("message", "Orden realizada con éxito");
+		} catch (Exception e) {
+			response.put("status", "error");
+			response.put("message", "Error al realizar la orden");
 		}
-
-		// limpiar la lista y la orden
-		orden = new Orden();
-		detalles.clear();
-
-		return "redirect:/";
+		return response;
 	}
 
 	@PostMapping("/search")
